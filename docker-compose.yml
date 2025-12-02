@@ -1,0 +1,73 @@
+# docker-compose.yml (save in project root)
+version: '3.9'
+
+services:
+  # PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: neighboride-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: neighboride_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Redis
+  redis:
+    image: redis:7-alpine
+    container_name: neighboride-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Backend — FastAPI (only this needs Dockerfile)
+  backend:
+    build:
+      context: .
+      dockerfile: backend/DockerFile # ← Explicit path
+    container_name: neighboride-backend
+    ports:
+      - "8001:8001"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+    command: gunicorn -k uvicorn.workers.UvicornWorker -w 4 --bind 0.0.0.0:8001 app.main:app
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/neighboride_db
+      - REDIS_URL=redis://redis:6379
+  # Web — Next.js (runs directly with npm, no Docker needed)
+  web:
+    image: node:18-alpine
+    container_name: neighboride-web
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+    command: sh -c "npm install && npm run dev"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

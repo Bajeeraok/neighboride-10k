@@ -1,0 +1,25 @@
+{
+  "name": "neighboride-web",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@react-google-maps/api": "^2.19.2",
+    "@stripe/stripe-js": "^2.1.0",
+    "axios": "^1.6.0",
+    "next": "14.2.0",
+    "next-auth": "^4.24.5",
+    "react": "^18",
+    "react-dom": "^18",
+    "redis": "^4.6.0",
+    "tailwindcss": "^3.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.1",
+    "@types/react": "19.2.7",
+    "typescript": "5.9.3"
+  }
+}
