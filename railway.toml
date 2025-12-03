@@ -1,18 +1,20 @@
+$schema = 'https://railway.app/railway.schema.json'
+
 [build]
-  builder = "nixpacks"
+  builder = "RAILPACK" # Switch to Railpack (2025 default — faster, better multi-lang)
 
-[[services]]
-name = "backend"
-source = ["backend/"]
+[services.backend]
+  rootDir = "backend" # Build from backend folder
+  buildCommand = "pip install -r requirements.txt" # Python/FastAPI
+  startCommand = "uvicorn app.main:app --host 0.0.0.0 --port $PORT" # Or gunicorn if using
 
-[[services.ports]]
-port = 8000
-forceHttps = true
+[services.web]
+  rootDir = "web" # Build from web folder
+  buildCommand = "npm install && npm run build" # Next.js
+  startCommand = "npm run start" # Production server
 
-[[services]]
-name = "web"
-source = ["web/"]
+[services.db]
+  type = "postgres:15" # Auto-adds Postgres
 
-[[services.ports]]
-port = 3000
-forceHttps = true
+[services.redis]
+  type = "redis:7" # Auto-adds Redis
