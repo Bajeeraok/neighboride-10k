@@ -4,7 +4,7 @@
 # ← NO builder = "RAILPACK" anywhere
 [project]
 name = "Neighboride"
-$schema="https://railway.app/railway.schema.json"
+
 
 [[services]]
   name = "backend"
