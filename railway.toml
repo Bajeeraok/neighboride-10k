@@ -1,19 +1,25 @@
+# No global [build]—use per-service defaults
 
-[build]
-  builder = "RAILPACK" # Switch to Railpack (2025 default — faster, better multi-lang)
+# Backend (FastAPI/Python) - Auto-detects from /backend
+[[services]]
+  name = "backend"
+  rootDir = "backend"
+  buildCommand = "pip install -r requirements.txt"  # Optional: speeds up if auto fails
+  startCommand = "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8001}"
 
-[services.backend]
-  rootDir = "backend" # Build from backend folder
-  buildCommand = "pip install -r requirements.txt" # Python/FastAPI
-  startCommand = "uvicorn app.main:app --host 0.0.0.0 --port $PORT" # Or gunicorn if using
+# Frontend (Next.js) - Auto-detects from /web
+[[services]]
+  name = "web"
+  rootDir = "web"
+  buildCommand = "npm install && npm run build"     # Optional: ensures clean build
+  startCommand = "npm run start"
 
-[services.web]
-  rootDir = "web" # Build from web folder
-  buildCommand = "npm install && npm run build" # Next.js
-  startCommand = "npm run start" # Production server
+# PostgreSQL - No build needed
+[[services]]
+  name = "db"
+  type = "postgres:15"
 
-[services.db]
-  type = "postgres:15" # Auto-adds Postgres
-
-[services.redis]
-  type = "redis:7" # Auto-adds Redis
+# Redis - No build needed
+[[services]]
+  name = "redis"
+  type = "redis:7"
