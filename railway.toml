@@ -1,25 +1,22 @@
-# No global [build]—use per-service defaults
+# railway.toml — FINAL WORKING VERSION (Dec 2025)
 
-# Backend (FastAPI/Python) - Auto-detects from /backend
+# ← NO [build] section at all
+# ← NO builder = "RAILPACK" anywhere
+
 [[services]]
   name = "backend"
   rootDir = "backend"
-  buildCommand = "pip install -r requirements.txt"  # Optional: speeds up if auto fails
   startCommand = "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8001}"
 
-# Frontend (Next.js) - Auto-detects from /web
 [[services]]
   name = "web"
   rootDir = "web"
-  buildCommand = "npm install && npm run build"     # Optional: ensures clean build
   startCommand = "npm run start"
 
-# PostgreSQL - No build needed
 [[services]]
   name = "db"
   type = "postgres:15"
 
-# Redis - No build needed
 [[services]]
   name = "redis"
   type = "redis:7"
