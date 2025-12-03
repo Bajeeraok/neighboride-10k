@@ -8,13 +8,21 @@ name = "Neighboride"
 
 [[services]]
   name = "backend"
-  dockerfilePath = "./backend/Dockerfile"
-  startCommand = "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8001}"
+  rootDirectory = "./backend"
+  dockerfilePath = "Dockerfile"
+  envVars = ["PORT=8001",
+              "REDIS_URL={{ redis.REDIS_URL }}",
+              "DATABASE_URL={{ postgres.DATABASE_URL }}"
+            ]
+  #startCommand = "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8001}"
 
 [[services]]
   name = "web"
-  dockerfilepath = "./web/Dockerfile"
-  startCommand = "npm run start"
+  rootDirectory = "./web"
+  dockerfilePath = "Dockerfile"
+   envVars = [ "VITE_API_URL={{ backend.PUBLIC_URL }}"
+            ]
+  #startCommand = "npm run start"
 
 [[services]]
   name = "db"
@@ -22,4 +30,4 @@ name = "Neighboride"
 
 [[services]]
   name = "redis"
-  type = "redis:7"
+  type = "redis:7-alpine"
