@@ -6,6 +6,9 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Car, Users, Zap, Mail, ArrowRight, CheckCircle } from 'lucide-react';
 
+// ADD THIS LINE ←←←←←←←←←←←←←←←←←←←←←
+export const dynamic = 'force-dynamic';
+
 export default function Home() {
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
