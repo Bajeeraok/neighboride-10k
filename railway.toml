@@ -25,7 +25,7 @@ name = "Neighboride"
   #startCommand = "npm run start"
 
 [[services]]
-  name = "db"
+  name = "postgres"
   type = "postgres:15"
 
 [[services]]
