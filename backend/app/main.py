@@ -30,7 +30,7 @@ redis_client = redis.from_url(os.getenv("REDIS_URL"))
 celery = Celery(__name__, broker=os.getenv("REDIS_URL"))
 celery.autodiscover_tasks(["app"])
 
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"], allow_credentials=True)
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -49,6 +49,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
 
 @app.post("/auth/request-magic-link")
 def request_magic_link(email: str = Body(...,embed=True), db: Session = Depends(get_db)):
+    print('request received')
     return auth.create_magic_link(db, email)
 
 @app.get("/auth/magic")
