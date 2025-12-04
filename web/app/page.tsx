@@ -166,9 +166,8 @@ export default function Home() {
                   </div>
                 </div>
 
-                <input name="email" id="email"
+                <input id="email"
                   autoComplete="email"
-                  autoComplete="on"
                   type="email"
                   placeholder="you@bankofamerica.com"
                   value={email}
