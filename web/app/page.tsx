@@ -34,7 +34,7 @@ export default function Home() {
         </p>
 
         <input id="email"
-          autosuggest="email"
+          
           type="email"
           placeholder="you@bankofamerica.com"
           value={email}
