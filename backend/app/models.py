@@ -5,7 +5,7 @@ from datetime import datetime
 
 class User(Base):
     __tablename__ = "users"
-    id = Column(Integer, primary_key=True, index=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     email = Column(String, unique=True, index=True)
     full_name = Column(String)
     phone = Column(String)
@@ -24,7 +24,7 @@ class User(Base):
 
 class SubscriptionPlan(Base):
     __tablename__ = "subscription_plans"
-    id = Column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     name = Column(String)
     price_monthly = Column(Float)
     max_rides_per_month = Column(Integer, default=5)
@@ -32,7 +32,7 @@ class SubscriptionPlan(Base):
 
 class UserSubscription(Base):
     __tablename__ = "user_subscriptions"
-    id = Column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     plan_id = Column(Integer, ForeignKey("subscription_plans.id"))
     stripe_subscription_id = Column(String)
@@ -41,7 +41,7 @@ class UserSubscription(Base):
 
 class Ride(Base):
     __tablename__ = "rides"
-    id = Column(Integer, primary_key=True, index=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     driver_id = Column(Integer, ForeignKey("users.id"))
     origin = Column(String)
     destination = Column(String)
@@ -61,7 +61,7 @@ class Ride(Base):
 
 class Booking(Base):
     __tablename__ = "bookings"
-    id = Column(Integer, primary_key=True, index=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     ride_id = Column(Integer, ForeignKey("rides.id"))
     passenger_id = Column(Integer, ForeignKey("users.id"))
     seats_booked = Column(Integer)
@@ -72,7 +72,7 @@ class Booking(Base):
 
 class Review(Base):
     __tablename__ = "reviews"
-    id = Column(Integer, primary_key=True, index=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     booking_id = Column(Integer, ForeignKey("bookings.id"))
     reviewer_id = Column(Integer, ForeignKey("users.id"))
     reviewed_id = Column(Integer, ForeignKey("users.id"))
@@ -81,21 +81,21 @@ class Review(Base):
 
 class DriverWallet(Base):
     __tablename__ = "driver_wallets"
-    id = Column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     driver_id = Column(Integer, ForeignKey("users.id"))
     balance = Column(Float, default=0.0)
     total_earned = Column(Float, default=0.0)
 
 class Referral(Base):
     __tablename__ = "referrals"
-    id = Column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     referrer_id = Column(Integer, ForeignKey("users.id"))
     referred_id = Column(Integer, ForeignKey("users.id"))
     credit_given = Column(Boolean, default=False)
 
 class DriverIncentive(Base):
     __tablename__ = "driver_incentives"
-    id = Column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     driver_id = Column(Integer, ForeignKey("users.id"))
     type = Column(String)
     amount = Column(Float)
@@ -105,7 +105,7 @@ class DriverIncentive(Base):
 # Add this new model
 class AllowedDomain(Base):
     __tablename__ = "allowed_domains"
-    id = Column(Integer, primary_key=True, index=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     domain = Column(String, unique=True, index=True) # e.g., "wellsfargo.com"
     company_name = Column(String) # "Wells Fargo"
     is_active = Column(Boolean, default=True)
