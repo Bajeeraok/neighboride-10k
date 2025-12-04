@@ -47,14 +47,14 @@ def create_magic_link(db: Session, email: str):
     
     token = secrets.token_urlsafe(32)
     expires = datetime.utcnow() + timedelta(minutes=15)
-    db_token = MagicLinkToken(email=email.lower(), token=token, expires_at=expires)
+    db_token = MagicLinkToken(email=email.lower().strip(), token=token, expires_at=expires)
     db.add(db_token)
     db.commit()
-    alert('committed')
+    print('committed')
     # Send email via Resend
-    link = f"https://yourapp.com/auth/magic?token={token}"
+    link = f"https://neighboride-backend.up.railway.app/auth/magic?token={token}"
     resend.Emails.send({
-        "from": "Neighboride <no-reply@yourapp.com>",
+        "from": "Neighboride <no-reply@neighboride.com>",
         "to": email,
         "subject": "Login to Neighboride",
         "html": f"<p>Click to log in: <a href='{link}'>Sign In</a></p><p>Link expires in 15 minutes.</p>"
