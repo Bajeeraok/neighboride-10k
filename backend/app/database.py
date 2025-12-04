@@ -4,6 +4,8 @@ from sqlalchemy.orm import sessionmaker
 import os
 from dotenv import load_dotenv
 
+from sqlalchemy.ext.asyncio importcreate_async_engine
+
 load_dotenv()
 
 db_url = os.getenv("DATABASE_URL")
@@ -13,12 +15,6 @@ if "sslmode=" not in db_url:
     db_url = f"{db_url}{'&' if '?' in db_url else '?'}sslmode=require"
     
 engine = create_engine(db_url,pool_pre_ping=True,pool_size=5,max_overflow=5,future=True)
-async def verify():
-    async with engine.connect() as conn:
-        val await conn.scalar(text("SELECT 1"))
-        print("DB OK",val)
-asyncio.run(verify())
-
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
