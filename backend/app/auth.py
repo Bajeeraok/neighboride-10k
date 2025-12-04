@@ -23,6 +23,7 @@ import secrets
 import os
 
 from . import models
+from sqlalchemy.orm import  Mapped, mapped_column
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
