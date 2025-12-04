@@ -9,19 +9,20 @@ export default function Home() {
   const sendMagicLink = async () => {
     try {
       alert('request received')
-      const res = await fetch('http://localhost:8001/auth/request-magic-link', {
+      const res = await fetch('https://neighboride-backend.up.railway.app/auth/request-magic-link', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
       if (res.ok) {
+        alert('got response'+res.ok);
         setMagicSent(true);
       } else {
         const error= await res.status;
-        alert('Errir: ' +error);
+        alert('Error: ' +error);
       }
     } catch (err) {
-      alert('Check backend is running on port 8001');
+      alert('Check backend is running on port 8001'+err);
     }
   };
 
