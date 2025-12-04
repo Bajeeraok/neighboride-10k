@@ -1,7 +1,7 @@
 from http.client import HTTPException
 import secrets
 from datetime import datetime, timedelta
-from unittest.mock import Base
+from .database import Base
 
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy import Boolean, Column, DateTime, Integer, String
