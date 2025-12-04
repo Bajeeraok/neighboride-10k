@@ -15,12 +15,12 @@ class User(Base):
     rating = Column(Float, default=5.0)
     expo_push_token = Column(String) # For mobile alerts
 
-    subscription = relationship("UserSubscription")
-    rides_offered = relationship("Ride", back_populates="driver")
-    bookings = relationship("Booking", back_populates="passenger")
-    reviews_given = relationship("Review", foreign_keys="Review.reviewer_id")
-    reviews_received = relationship("Review", foreign_keys="Review.reviewed_id")
-    wallet = relationship("DriverWallet")
+    #subscription = relationship("UserSubscription")
+    #rides_offered = relationship("Ride", back_populates="driver")
+    #bookings = relationship("Booking", back_populates="passenger")
+    #reviews_given = relationship("Review", foreign_keys="Review.reviewer_id")
+    #reviews_received = relationship("Review", foreign_keys="Review.reviewed_id")
+    #wallet = relationship("DriverWallet")
 
 class SubscriptionPlan(Base):
     __tablename__ = "subscription_plans"
