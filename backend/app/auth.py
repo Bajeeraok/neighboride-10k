@@ -33,7 +33,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 1440 # 24 hours
 # New: Magic link tokens
 class MagicLinkToken(Base):
     __tablename__ = "magic_links"
-    id = Column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     email = Column(String, index=True)
     token = Column(String, unique=True, index=True)
     expires_at = Column(DateTime)
