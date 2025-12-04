@@ -11,8 +11,8 @@ name = "Neighboride"
   rootDirectory = "./backend"
   dockerfilePath = "Dockerfile"
   envVars = ["PORT=8001",
-              "REDIS_URL={{ redis.REDIS_URL }}",
-              "DATABASE_URL={{ postgres.DATABASE_URL }}"
+             "REDIS_URL={{ redis.REDISPRIVATEURL }}",
+             "DATABASE_URL={{ postgres.DATABASE_URL }}"
             ]
   #startCommand = "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8001}"
 
