@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 import os
 from dotenv import load_dotenv
 
-from sqlalchemy.ext.asyncio importcreate_async_engine
+from sqlalchemy.ext.asyncio import create_async_engine
 
 load_dotenv()
 
